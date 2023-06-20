@@ -55,4 +55,49 @@ async (req,res)=>{
     
 })
 
+
+//login endpoint ,login not required ,logging in POST:"/api/auth/login"
+router.post('/login',[
+  body('email',"enter a valid email").isEmail(),
+  body('password',"password cannot be blank").exists(),
+  
+],
+async (req,res)=>{
+  const result = validationResult(req);
+if (!result.isEmpty()) {
+  
+   return res.status(400).send({ errors: result.array() });
+}
+
+const{email,password}=req.body;
+
+try {
+let user= await User.findOne({email:req.body.email})
+if(!user){
+  return res.status(400).json({error:"please enter the correct credentials"})
+}
+
+const passwordCompare=await bcrypt.compare(password,user.password);
+if(!passwordCompare){
+  res.status(400).json({error:"please try to login with the correct credentials"})
+}
+
+  const data={
+      user:{
+          id:user.id
+      }
+  }
+
+  var authtoken = jwt.sign(data, JWT_SECRET);
+
+  res.json({authtoken})
+}
+catch (error)
+{
+  console.error(error.message);
+  res.status(500).send("some error occured")
+}
+  
+})
+
 module.exports=router;
