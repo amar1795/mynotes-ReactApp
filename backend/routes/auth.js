@@ -63,12 +63,14 @@ router.post('/login',[
   
 ],
 async (req,res)=>{
+  //adding data validation using express validator
   const result = validationResult(req);
 if (!result.isEmpty()) {
   
    return res.status(400).send({ errors: result.array() });
 }
 
+//fetching email and password using destructuring
 const{email,password}=req.body;
 
 try {
