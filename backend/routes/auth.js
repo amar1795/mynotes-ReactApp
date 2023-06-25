@@ -2,6 +2,7 @@ const express=require('express');
 const { body, validationResult } = require('express-validator');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
+var fetchuser=require('../middleware/fetchuser')
 
 const JWT_SECRET="hellobrother";
 
@@ -102,4 +103,20 @@ catch (error)
   
 })
 
-module.exports=router;
+//route 3:for getting the data from the user,POST:"/api/auth/getuser"
+
+router.post('/getuser',fetchuser,async (req,res)=>{
+try {
+  userId=req.user.id;
+const user= await User.findById(userId).select("-password")
+res.send(user)
+}
+catch(error)
+{
+  console.error(error.message);
+  res.status(500).send("some error occured")
+} 
+})
+
+
+module.exports=router
