@@ -9,7 +9,7 @@ const JWT_SECRET="hellobrother";
 const router=express.Router();
 const User=require("../models/User")
  
-//for creating a user with the endpoint without logging in POST:"/api/auth/createuser"
+//route 1:for creating a user with the endpoint without logging in POST:"/api/auth/createuser"
 router.post('/createuser',[
     body('name',"enter a valid name").isLength({min:3}),
     body('email',"enter a valid email").isEmail(),
@@ -57,7 +57,7 @@ async (req,res)=>{
 })
 
 
-//login endpoint ,login not required ,logging in POST:"/api/auth/login"
+//route 2:login endpoint ,login not required ,logging in POST:"/api/auth/login"
 router.post('/login',[
   body('email',"enter a valid email").isEmail(),
   body('password',"password cannot be blank").exists(),
