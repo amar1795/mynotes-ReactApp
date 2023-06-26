@@ -87,4 +87,27 @@ router.put("/updatenote/:id", fetchuser, async (req, res) => {
   }
 });
 
+//route 4:for deleting note using POST:"/api/notes/deletenote Login is required"
+//we use put endpoint for updateing anything a post will also work 
+router.delete("/deletenote/:id", fetchuser, async (req, res) => {
+  try {
+    
+
+    //find the note to updated and to update it
+    let note = await Notes.findById(req.params.id);
+    if (!note) {
+      return res.status(404).send("not found");
+    }
+    if (note.user.toString() !== req.user.id) {
+      return res.status(401).send("not allowed");
+    }
+
+    note = await Notes.findByIdAndDelete(req.params.id);
+    res.json({ "success":"the note has been deleted", note:note });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("some error occured");
+  }
+});
+
 module.exports = router;
