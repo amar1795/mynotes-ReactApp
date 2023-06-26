@@ -4,22 +4,19 @@ var fetchuser = require("../middleware/fetchuser");
 var Notes = require("../models/Notes");
 const { body, validationResult } = require("express-validator");
 
-//route 1:for fetching all the notes using  GET:"/api/auth/fetchallnotes Login is required"
+//route 1:for fetching all the notes using  GET:"/api/notes/fetchallnotes Login is required"
 
 router.get("/fetchallnotes", fetchuser, async (req, res) => {
-    try {
-        const notes = await Notes.find({ user: req.user.id });
-        res.json(notes);
-        
-    } catch (error) {
-        console.error(error.message);
-      res.status(500).send("Internal server error");
-        
-    }
- 
+  try {
+    const notes = await Notes.find({ user: req.user.id });
+    res.json(notes);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal server error");
+  }
 });
 
-//route 2:for adding note using POST:"/api/auth/addnote Login is required"
+//route 2:for adding note using POST:"/api/notes/addnote Login is required"
 router.post(
   "/addnote",
   fetchuser,
@@ -29,9 +26,9 @@ router.post(
   ],
   async (req, res) => {
     try {
-        //using destructuring storing the values
+      //using destructuring storing the values
       const { title, description, tag } = req.body;
-      
+
       const error = validationResult(req);
       if (!error.isEmpty()) {
         return res.status(400).send({ errors: error.array() });
@@ -50,5 +47,44 @@ router.post(
     }
   }
 );
+
+//route 3:for adding note using POST:"/api/notes/addnote Login is required"
+//we use put endpoint for updateing anything a post will also work 
+router.put("/updatenote/:id", fetchuser, async (req, res) => {
+  try {
+    //using destructuring storing the values
+    const { title, description, tag } = req.body;
+
+    const newnote = {};
+    if (title) {
+      newnote.title = title;
+    }
+    if (description) {
+      newnote.description = description;
+    }
+    if (tag) {
+      newnote.tag = tag;
+    }
+
+    //find the note to updated and to update it
+    let note = await Notes.findById(req.params.id);
+    if (!note) {
+      return res.status(404).send("not found");
+    }
+    if (note.user.toString() !== req.user.id) {
+      return res.status(401).send("not allowed");
+    }
+
+    note = await Notes.findByIdAndUpdate(
+      req.params.id,
+      { $set: newnote },
+      { new: true }
+    );
+    res.json({ note });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("some error occured");
+  }
+});
 
 module.exports = router;
