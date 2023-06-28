@@ -8,7 +8,7 @@ const Mainnotes = () => {
     <div className='row my-3'>
         <h2>Your notes</h2>
       {notes.map((note)=>{
-        return <MainnotesItem note={note}/>;
+        return <MainnotesItem key={note._id} note={note}/>;
       })}
       
     </div>
