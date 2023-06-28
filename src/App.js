@@ -18,7 +18,7 @@ function App() {
     <NoteState>
     <BrowserRouter>
       <Navbar/>
-      <Alert/>
+      <Alert message="this is Amazing react course"/>
       <div className="container">
       <Routes>
         <Route exact path="/" element={<Home/>} />
