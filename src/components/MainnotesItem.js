@@ -2,7 +2,7 @@ import React from 'react'
 
 const MainnotesItem = (props) => {
     const {note}=props;
-  return (
+  return (  
     <div className="col-md-3">
         
        
