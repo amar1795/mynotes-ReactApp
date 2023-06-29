@@ -13,6 +13,7 @@ const AddNote = () => {
         addNote(note.title,note.description,note.tag)
 
     }
+    //to add the title and description we are adding 
      const onChange=(e)=>{
         setNote({...note,[e.target.name]:e.target.value})
     }
@@ -29,12 +30,8 @@ const AddNote = () => {
     
   </div>
   <div className="mb-3">
-    <label htmlFor="title" className="form-label">description</label>
+    <label htmlFor="description" className="form-label">description</label>
     <input type="text" className="form-control" id="description" name='description' onChange={onChange}/>
-  </div>
-  <div className="mb-3 form-check">
-    <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
-    <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
   </div>
   <button type="submit" className="btn btn-primary" onClick={handleClick}>Submit</button>
   </div>

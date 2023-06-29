@@ -41,6 +41,7 @@ const NoteState=(props)=>{
           "__v": 0
         }
       ]
+      const [notes,setNotes]=useState(notesinitial);
 
       //to add the note
       const addNote=(title,description,tag)=>{
@@ -68,7 +69,6 @@ const NoteState=(props)=>{
         
       }
       
-      const [notes,setNotes]=useState(notesinitial);
     
 
     
