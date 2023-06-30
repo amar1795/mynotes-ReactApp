@@ -6,7 +6,7 @@ import Mainnotes from './Mainnotes'
 const AddNote = () => {
     const context=useContext(notecontext)
     const {addNote}= context;
-    const[note,setNote]=useState({title:"",description:"",tag:"default"})
+    const[note,setNote]=useState({title:"",description:"",tag:""})
 
     const handleClick=(e)=>{
         e.preventDefault();
@@ -33,6 +33,11 @@ const AddNote = () => {
     <label htmlFor="description" className="form-label">description</label>
     <input type="text" className="form-control" id="description" name='description' onChange={onChange}/>
   </div>
+  <div className="mb-3">
+    <label htmlFor="tag" className="form-label">Tag</label>
+    <input type="text" className="form-control" id="tag" name='tag' onChange={onChange}/>
+  </div>
+  
   <button type="submit" className="btn btn-primary" onClick={handleClick}>Add a note</button>
   </div>
 </form>
