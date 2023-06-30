@@ -33,7 +33,7 @@ const NoteState = (props) => {
       mode: "cors",// no-cors, *cors, same-origin
       headers: {
         "Content-Type": "application/json",
-        "authToken":
+        "auth-token":
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ5N2U4MDFhZjJiMzk3ZDZjZWJjYzZjIn0sImlhdCI6MTY4NzY3Njk4Mn0.No-Ibi6vSDngfLSKRP_4pZjCnQyfjIYoG8jSCYoyMBA",
       },
       body: JSON.stringify({title,description,tag}), // body data type must match "Content-Type" header
@@ -54,7 +54,19 @@ const NoteState = (props) => {
     setNotes(notes.concat(note));
   };
   //to delete the note
-  const deleteNote = (id) => {
+  const deleteNote = async(id) => {
+    const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+      method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+      // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ5N2U4MDFhZjJiMzk3ZDZjZWJjYzZjIn0sImlhdCI6MTY4NzY3Njk4Mn0.No-Ibi6vSDngfLSKRP_4pZjCnQyfjIYoG8jSCYoyMBA",
+      },
+     
+    });
+    const json = response.json(); // parses JSON response into native JavaScript objects
+
     const newNotes = notes.filter((note) => {
       return note._id !== id;
     });
