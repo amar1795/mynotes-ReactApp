@@ -10,6 +10,7 @@ const Mainnotes = () => {
     },[])
     const[note,setNote]=useState({etitle:"",edescription:"",etag:""})
      const ref=useRef(null)
+
      const updateNote=(CurrentNote)=>{
       ref.current.click();
       setNote({etitle:CurrentNote.title,edescription:CurrentNote.description,etag:CurrentNote.tag})
@@ -55,7 +56,7 @@ const Mainnotes = () => {
   </div>
   <div className="mb-3">
     <label htmlFor="etag" className="form-label">Tag</label>
-    <input type="text" className="form-control" id="etag" name='etag' value={note.etag}onChange={onChange}/>
+    <input type="text" className="form-control" id="etag" name='etag' value={note.etag} onChange={onChange}/>
   </div>
   
   </div>
@@ -74,7 +75,7 @@ const Mainnotes = () => {
         <h2>Your notes</h2>
   {/* Populating the DOM with cards using map function */}   
       {notes.map((note)=>{
-        return <MainnotesItem key={note._id} updateNote={updateNote}note={note}/>;
+        return <MainnotesItem key={note._id} updateNote={updateNote} note={note}/>;
       })}
       
     </div>

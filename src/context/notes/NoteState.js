@@ -76,7 +76,7 @@ const NoteState = (props) => {
   //to edit the note
   const editNote = async (id, title, description, tag) => {
     const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      method: "PUT", // *GET, POST, PUT, DELETE, etc.
       // no-cors, *cors, same-origin
       headers: {
         "Content-Type": "application/json",
